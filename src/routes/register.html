@@ -1,0 +1,57 @@
+<svelte:head>
+	<title>Sign up</title>
+</svelte:head>
+
+<h1>Sign up</h1>
+<p>
+    <a href="/login">Have an account?</a>
+</p>
+
+<ListErrors {errors}/>
+
+<form on:submit='submit(event)'>
+    <input type="text" placeholder="Your Name" bind:value=username>
+    <input type="text" placeholder="Email" bind:value=email>
+    <input type="password" placeholder="Password" bind:value=password>
+    <button>
+        Sign up
+    </button>
+</form>
+
+<script>
+	import { goto } from '../../__sapper__/client.js';
+
+	export default {
+		components: { ListErrors: '../components/ListErrors.html' },
+
+		data() {
+			return {
+				username: '',
+				email: '',
+				password: '',
+				errors: null
+			};
+		},
+
+		methods: {
+			submit(event) {
+				event.preventDefault();
+
+				const { username, email, password } = this.get();
+
+				this.store.register({ username, email, password })
+					.then(response => {
+						if (response.errors) {
+							this.set({ errors: response.errors });
+						} else {
+							goto('/');
+						}
+					})
+					.catch(err => {
+						// TODO handle network errors
+						console.error({ err });
+					});
+			}
+		}
+	};
+</script>
