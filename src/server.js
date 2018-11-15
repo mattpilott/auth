@@ -9,8 +9,39 @@ import { Store } from 'svelte/store.js';
 
 const FileStore = sessionFileStore(session);
 
+// Log every request
+function logger(req, res, next) {
+    console.log(`~> Received ${req.method} on ${req.url}`);
+    next(); // move on
+}
+
+function protect(req, res, next) {
+
+    let allowed = [
+        '/login',
+        '/auth/login'
+    ];
+
+    let isProtected = allowed.indexOf(req.url) == -1 && req.url.indexOf('.') == -1;
+
+    if( isProtected ) {
+
+        if( ! req.session.user ) {
+
+            res.statusCode = 302;
+            res.setHeader('Location', '/login');
+            res.end();
+
+            return;
+        }
+    }
+
+    next();
+}
+
 express()
 	.use(bodyParser.json())
+    //.use(logger)
 	.use(session({
 		secret: 'topsecret',
 		resave: false,
@@ -22,6 +53,7 @@ express()
 			path: process.env.NOW ? `/tmp/sessions` : `.sessions`
 		})
 	}))
+    .use(protect)
 	.use(
 		compression({ threshold: 0 }),
 		serve('static'),

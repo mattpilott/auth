@@ -16,9 +16,9 @@ function post(endpoint, data) {
 class AuthStore extends Store {
 
 	login(credentials) {
-		return post(`auth/login`, credentials).then(response => {
-			if (response.user) this.set({ user: response.user });
-			return response;
+		return post(`auth/login`, credentials).then(user => {
+			this.set({ user: user });
+			return user;
 		});
 	}
 
@@ -30,16 +30,16 @@ class AuthStore extends Store {
 	}
 
 	register(user) {
-		return post(`auth/register`, user).then(response => {
-			if (response.user) this.set({ user: response.user });
-			return response;
+		return post(`auth/register`, user).then(user => {
+			this.set({ user: user });
+			return user;
 		});
 	}
 
 	save(user) {
-		return post(`auth/save`, user).then(response => {
-			if (response.user) this.set({ user: response.user });
-			return response;
+		return post(`auth/save`, user).then(user => {
+			this.set({ user: user });
+			return user;
 		});
 	}
 }

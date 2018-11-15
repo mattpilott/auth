@@ -10,9 +10,9 @@
 <ListErrors {errors}/>
 
 <form on:submit='submit(event)'>
-    <input type="email" placeholder="Email" bind:value=email>
+    <input type="email" placeholder="Email" bind:value=username>
     <input type="password" placeholder="Password" bind:value=password>
-    <button type="submit" disabled='{!email || !password}'>
+    <button type="submit" disabled='{!username || !password}'>
         Sign in
     </button>
 </form>
@@ -25,8 +25,8 @@
 
 		data() {
 			return {
-				email: '',
-				password: '',
+				username: 'matt@creativelittledots.co.uk',
+				password: 'password',
 				errors: null
 			};
 		},
@@ -35,19 +35,18 @@
 			submit(event) {
 				event.preventDefault();
 
-				const { email, password } = this.get();
+				const { username, password } = this.get();
 
-				this.store.login({ email, password })
-					.then(response => {
+				this.store.login({ username, password })
+					.then((response) => {
 
-						if (response.errors) {
-							this.set({ errors: response.errors });
-						}
-                        else {
-							goto('/');
-						}
+                        goto('/');
 					})
-					.catch(err => console.error({ err }));
+					.catch((response) => {
+
+                        response.error && this.set({ errors: response.error });
+
+                    });
 			}
 		}
 	};

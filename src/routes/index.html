@@ -2,12 +2,14 @@
 	<title>Sapper project template</title>
 </svelte:head>
 
-<h1>Great success!</h1>
+<h1>Great success! Well done {firstname}</h1>
 
 <figure>
 	<img alt='Borat' src='great-success.png'>
 	<figcaption>HIGH FIVE!</figcaption>
 </figure>
+
+<button on:click='logout()'>Logout</button>
 
 <style>
 	h1, figure {
@@ -38,3 +40,32 @@
 		}
 	}
 </style>
+
+<script>
+	import { goto } from '../../__sapper__/client.js';
+
+	export default {
+
+        data() {
+			return {
+				firstname: ''
+			};
+		},
+
+		methods: {
+			logout() {
+				this.store.logout().then(() => {
+					goto('/login');
+				});
+			}
+        },
+        preload({session}) {
+
+            const { user } = this.store.get();
+
+            return {
+                firstname: user.first_name
+            }
+        }
+    }
+</script>

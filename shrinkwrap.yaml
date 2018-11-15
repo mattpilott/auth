@@ -3,6 +3,7 @@ dependencies:
   compression: 1.7.3
   express: 4.16.4
   express-session: 1.15.6
+  node-fetch: 2.3.0
   serve-static: 1.13.2
   session-file-store: 1.2.0
 devDependencies:
@@ -2106,6 +2107,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-rmTZ9kz+f3rCvK2TD1Ue/oZlns7OGoIWP4fc3llxxRXlOkHKoWPPWJOfFYpITabSow43QJbRIoHQXtt10VldyQ==
+  /node-fetch/2.3.0:
+    dev: false
+    engines:
+      node: 4.x || >=6.0.0
+    resolution:
+      integrity: sha512-MOd8pV3fxENbryESLgVIeaGKrdl+uaYhCSSVkjeOb/31/njTpcis5aWfdqgNlHIrKOLRbMnfPINPOML2CIFeXA==
   /node-releases/1.0.3:
     dependencies:
       semver: 5.6.0
@@ -3105,6 +3112,7 @@ specifiers:
   compression: ^1.7.1
   express: ^4.16.3
   express-session: ^1.15.6
+  node-fetch: ^2.3.0
   npm-run-all: ^4.1.2
   rollup: ^0.67.1
   rollup-plugin-babel: ^4.0.2
