@@ -1,5 +1,5 @@
 import sirv from 'sirv';
-import polka from 'polka';
+import express from 'express';
 import compression from 'compression';
 import * as sapper from '../__sapper__/server.js';
 
@@ -29,8 +29,8 @@ function protect(req, res, next) {
     ];
 
     let isProtected = allowed.indexOf(req.url) == -1 && req.url.indexOf('.') == -1;
-
-    if( isProtected ) { // <-- always false in polka but not in express :s
+    
+    if( isProtected ) {
 
         if( ! req.session.user ) {
 
@@ -44,7 +44,7 @@ function protect(req, res, next) {
     next();
 }
 
-polka()
+express()
     //.use(logger)
 	.use(bodyParser.json())
 	.use(session({

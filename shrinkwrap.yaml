@@ -1,11 +1,14 @@
 dependencies:
+  '@polka/send-type': 0.5.0
   body-parser: 1.18.3
   compression: 1.7.3
   express: 4.16.4
   express-session: 1.15.6
   node-fetch: 2.3.0
+  polka: 0.5.1
   serve-static: 1.13.2
   session-file-store: 1.2.0
+  sirv: 0.2.2
 devDependencies:
   '@babel/core': 7.1.6
   '@babel/plugin-syntax-dynamic-import': 7.0.0
@@ -24,6 +27,12 @@ devDependencies:
   sapper: 0.24.0
   svelte: 2.15.3
 packages:
+  /@arr/every/1.0.0:
+    dev: false
+    engines:
+      node: '>=4'
+    resolution:
+      integrity: sha1-MU+BaPUK5IoDLP2tX9tDb0ZKl6w=
   /@babel/code-frame/7.0.0:
     dependencies:
       '@babel/highlight': 7.0.0
@@ -648,6 +657,14 @@ packages:
     dev: true
     resolution:
       integrity: sha512-DMiUzlY9DSjVsOylJssxLHSgj6tWM9PRFJOGW/RaOglVOK9nzTxoOMfTfRQXGUCUQ/HmlG2efwC+XqUEJ5ay4w==
+  /@polka/send-type/0.5.0:
+    dev: false
+    resolution:
+      integrity: sha512-TCC0gbR5Cgx4lRHwd9JX3c9qq4EY+TujCYuy+7AvZpeugbLBirDNvq/jD3NZ+MPgHTnvZhbm9nuRTgse9UmNZA==
+  /@polka/url/0.5.0:
+    dev: false
+    resolution:
+      integrity: sha512-oZLYFEAzUKyi3SKnXvj32ZCEGH6RDnao7COuCVhDydMS9NrCSVXhM79VaKyP5+Zc33m0QXEd2DN3UkU7OsHcfw==
   /@types/estree/0.0.39:
     dev: true
     resolution:
@@ -1454,6 +1471,14 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-5cJVtyXWH8PiJPVLZzzoIizXx944O4OmRro5MWKx5fT4MgcN7OfaMutPeaTdJCCURwbWdhhcCWcKIffPnmTzBg==
+  /globalyzer/0.1.0:
+    dev: false
+    resolution:
+      integrity: sha512-40oNTM9UfG6aBmuKxk/giHn5nQ8RVz/SS4Ir6zgzOv9/qC3kKZ9v4etGTcJbEl/NyVQH7FGU7d+X1egr57Md2Q==
+  /globrex/0.1.1:
+    dev: false
+    resolution:
+      integrity: sha512-bqKcPhb+ZtrISivpu6oLmwIyINlPlzueO/BDCdfnzUeu7SYxnHTXmWP7uQI5PnQXc5yGXOscGBEGagloA2hcSw==
   /graceful-fs/4.1.15:
     resolution:
       integrity: sha512-6uHUhOPEBgQ24HM+r6b/QwWfZq+yiFcipKFrOFiBEnWdy5sdzYoi+pJeQaPI5qOLRFqWmAXUPQNsielzdLoecA==
@@ -1951,6 +1976,14 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
+  /matchit/1.0.6:
+    dependencies:
+      '@arr/every': 1.0.0
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha1-gl2gZGi9Mk8CGevijhKkG/tVJMQ=
   /math-random/1.0.1:
     dev: true
     resolution:
@@ -2042,6 +2075,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-KI1+qOZu5DcW6wayYHSzR/tXKCDC5Om4s1z2QJjDULzLcmf3DvzS7oluY4HCTrc+9FiKmWUgeNLg7W3uIQvxtQ==
+  /mime/2.3.1:
+    dev: false
+    engines:
+      node: '>=4.0.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-OEUllcVoydBHGN1z84yfQDimn58pZNNNXgZlHXSboxMlFvgI6MXSWpWKpFRra7H1HxpVhHTkrghfRW49k6yjeg==
   /minimatch/3.0.4:
     dependencies:
       brace-expansion: 1.1.11
@@ -2296,6 +2336,13 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-5aSs0sEB/fPZpNB/DbxNtJ3SgXY=
+  /polka/0.5.1:
+    dependencies:
+      '@polka/url': 0.5.0
+      trouter: 2.0.1
+    dev: false
+    resolution:
+      integrity: sha512-de0VgqoAgGIJoa4mTj+e9KKIt5uRJOGyE37TbsoYEuDzI+cbJZ8nKBRCmiwv9DUMKrYhAMHW/di7/6/65zgZZQ==
   /posix-character-classes/0.1.1:
     dev: true
     engines:
@@ -2718,6 +2765,16 @@ packages:
     dev: true
     resolution:
       integrity: sha512-wRlG/wMuV/czrzJEWBUPjydU/Ve0kTrTH8wHLRjuY6S2BDB+qDDXkTY/WrNc/7t5jnd0LPVO1sRIE7Ga6uXTpw==
+  /sirv/0.2.2:
+    dependencies:
+      '@polka/url': 0.5.0
+      mime: 2.3.1
+      tiny-glob: 0.2.3
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-X0UjfTc32MeK+rkhgdQK/blQ5ysC0CfLF9OH9d8x2RnpaD2D5BDLMeox79utmhxai4T+/VCahK5pDgAEnG/tNQ==
   /slide/1.1.6:
     dev: false
     resolution:
@@ -2910,6 +2967,13 @@ packages:
     dev: true
     resolution:
       integrity: sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
+  /tiny-glob/0.2.3:
+    dependencies:
+      globalyzer: 0.1.0
+      globrex: 0.1.1
+    dev: false
+    resolution:
+      integrity: sha512-pkCxlClaL6MznxrgW4D2VDk5w6hz3SEOtXcJ9CPhxLjhpsvTd1g3qkMAqxoJNjKsCQlJj6w485ij5d5/Fb9jUQ==
   /to-fast-properties/2.0.0:
     dev: true
     engines:
@@ -2950,6 +3014,14 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-yy4SAwZ+DI3h9hQJS5/kVwTqYAM=
+  /trouter/2.0.1:
+    dependencies:
+      matchit: 1.0.6
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-kr8SKKw94OI+xTGOkfsvwZQ8mWoikZDd2n8XZHjJVZUARZT+4/VV6cacRS6CLsH9bNm+HFIPU1Zx4CnNnb4qlQ==
   /tslib/1.9.3:
     dev: true
     resolution:
@@ -3107,6 +3179,7 @@ specifiers:
   '@babel/plugin-transform-runtime': ^7.0.0
   '@babel/preset-env': ^7.0.0
   '@babel/runtime': ^7.0.0
+  '@polka/send-type': ^0.5.0
   body-parser: ^1.18.3
   chokidar: ^2.0.4
   compression: ^1.7.1
@@ -3114,6 +3187,7 @@ specifiers:
   express-session: ^1.15.6
   node-fetch: ^2.3.0
   npm-run-all: ^4.1.2
+  polka: ^0.5.1
   rollup: ^0.67.1
   rollup-plugin-babel: ^4.0.2
   rollup-plugin-commonjs: ^9.1.6
@@ -3124,4 +3198,5 @@ specifiers:
   sapper: ^0.24.0
   serve-static: ^1.13.1
   session-file-store: ^1.2.0
+  sirv: ^0.2.2
   svelte: ^2.0.0

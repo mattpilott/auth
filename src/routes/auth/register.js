@@ -14,8 +14,6 @@ export function post(req, res) {
 
             req.session.token = token;
 
-            res.set({ 'Content-Type': 'application/json' });
-
             api.post('/wp-json/wp/v2/users', userCredentials, token.access_token)
                 .then(user => {
 
@@ -23,13 +21,13 @@ export function post(req, res) {
                 })
                 .catch(response => {
 
-                    res.status(response.status);
+                    res.send = send.bind(res, response.status);
                     res.end(response);
                 });
         })
         .catch(response => {
 
-            res.status(response.status);
+            res.send = send.bind(res, response.status);
             res.end(response);
         });
 }
