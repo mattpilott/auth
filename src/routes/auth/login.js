@@ -3,7 +3,6 @@ import * as api from '../_api.js';
 export function post(req, res) {
 
     const userCredentials = req.body;
-
     const clientCredentials = {
         grant_type: 'password',
         client_id: 'bepxSF2ApO1LpPuPrlrhYM0blFC6JBasRDRFgqum',
@@ -12,27 +11,25 @@ export function post(req, res) {
 
     const allCredentials = {...clientCredentials, ...userCredentials};
 
-	api.post('/wp/?oauth=token', allCredentials).then(token => {
+	api.post('/wp/?oauth=token', allCredentials)
+        .then(token => {
 
-		req.session.token = token;
+    		req.session.token = token;
 
-        res.set({
-            'Content-Type': 'application/json'
-        });
+            res.set({ 'Content-Type': 'application/json' });
 
-        api.post('/wp-json/wp/v2/users/me', null, token.access_token)
-            .then(user => {
+            api.post('/wp-json/wp/v2/users/me', null, token.access_token)
+                .then(user => {
 
-                req.session.user = user;
+                    req.session.user = user;
+            		res.end(JSON.stringify(user));
 
-        		res.end(JSON.stringify(user));
+                })
+                .catch(response => {
 
-            })
-            .catch(response => {
-
-                res.status(response.status);
-                res.end(response);
-            });
+                    res.status(response.status);
+                    res.end(response);
+                });
 
 	    })
         .catch(response => {

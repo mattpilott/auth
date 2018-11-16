@@ -10,10 +10,10 @@
 <ListErrors {errors}/>
 
 <form on:submit='submit(event)'>
-    <input type="text" placeholder="Your Name" bind:value=username>
-    <input type="text" placeholder="Email" bind:value=email>
+    <input type="text" placeholder="Your Userame" bind:value=username>
+    <input type="email" placeholder="Email" bind:value=email>
     <input type="password" placeholder="Password" bind:value=password>
-    <button>
+    <button type="submit" disabled='{!username || !email || !password}'>
         Sign up
     </button>
 </form>
@@ -26,9 +26,9 @@
 
 		data() {
 			return {
-				username: '',
-				email: '',
-				password: '',
+				username: 'test22',
+				email: 'hello@matt-pilott.com',
+				password: 'password',
 				errors: null
 			};
 		},
@@ -40,17 +40,22 @@
 				const { username, email, password } = this.get();
 
 				this.store.register({ username, email, password })
-					.then(response => {
-						if (response.errors) {
+					.then((response) => {
+
+                        if (response.errors) {
+
 							this.set({ errors: response.errors });
-						} else {
-							goto('/');
+						}
+
+                        else {
+
+							goto('/login');
 						}
 					})
-					.catch(err => {
-						// TODO handle network errors
-						console.error({ err });
-					});
+                    .catch((response) => {
+
+                        response.error && this.set({ errors: response.error });
+                    });
 			}
 		}
 	};

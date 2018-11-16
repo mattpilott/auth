@@ -1,6 +1,7 @@
 const base = 'https://docs.health-and-parenting.com';
 
 function send({ method, path, data, token }) {
+
 	const fetch = process.browser ? window.fetch : require('node-fetch').default;
 
 	const opts = { method, headers: {} };
@@ -17,6 +18,7 @@ function send({ method, path, data, token }) {
 	return fetch(`${base}/${path}`, opts)
 		.then(r => r.text())
 		.then(json => {
+
 			try {
 				return JSON.parse(json);
 			} catch (err) {

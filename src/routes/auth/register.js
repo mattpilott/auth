@@ -1,17 +1,35 @@
 import * as api from '../_api.js';
 
 export function post(req, res) {
-	const user = req.body;
 
-	api.post('users', { user }).then(response => {
-		if (response.user) {
-			req.session.user = response.user;
-		}
+    const userCredentials = req.body;
+    const clientCredentials = {
+        grant_type: 'client_credentials',
+        client_id: 'Hpgr6cpEsV8qu8P8RJB6R0J1kwYpbjGCzbfO1cuq',
+        client_secret: 'qcLY3tciwFtyMobSB6i0LGWrtjpKU3NXh50T9Stm'
+    };
 
-		res.set({
-			'Content-Type': 'application/json'
-		});
+	api.post('/wp/?oauth=token', clientCredentials)
+        .then(token => {
 
-		res.end(JSON.stringify(response));
-	});
+            req.session.token = token;
+
+            res.set({ 'Content-Type': 'application/json' });
+
+            api.post('/wp-json/wp/v2/users', userCredentials, token.access_token)
+                .then(user => {
+
+            		res.end(JSON.stringify(user));
+                })
+                .catch(response => {
+
+                    res.status(response.status);
+                    res.end(response);
+                });
+        })
+        .catch(response => {
+
+            res.status(response.status);
+            res.end(response);
+        });
 }

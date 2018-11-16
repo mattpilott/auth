@@ -40,12 +40,19 @@
 				this.store.login({ username, password })
 					.then((response) => {
 
-                        goto('/');
+                        if (response.errors) {
+
+							this.set({ errors: response.errors });
+						}
+
+                        else {
+
+							goto('/');
+						}
 					})
 					.catch((response) => {
 
                         response.error && this.set({ errors: response.error });
-
                     });
 			}
 		}

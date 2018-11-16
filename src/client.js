@@ -17,6 +17,7 @@ class AuthStore extends Store {
 
 	login(credentials) {
 		return post(`auth/login`, credentials).then(user => {
+
 			this.set({ user: user });
 			return user;
 		});
@@ -24,20 +25,20 @@ class AuthStore extends Store {
 
 	logout() {
 		return post(`auth/logout`).then(response => {
+
 			this.set({ user: null });
 			return response;
 		});
 	}
 
-	register(user) {
-		return post(`auth/register`, user).then(user => {
-			this.set({ user: user });
-			return user;
-		});
+	register(credentials) {
+
+		return post(`auth/register`, credentials);
 	}
 
 	save(user) {
 		return post(`auth/save`, user).then(user => {
+
 			this.set({ user: user });
 			return user;
 		});

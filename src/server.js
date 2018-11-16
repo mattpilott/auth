@@ -19,7 +19,9 @@ function protect(req, res, next) {
 
     let allowed = [
         '/login',
-        '/auth/login'
+        '/auth/login',
+        '/auth/register',
+        '/register'
     ];
 
     let isProtected = allowed.indexOf(req.url) == -1 && req.url.indexOf('.') == -1;
