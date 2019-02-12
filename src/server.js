@@ -66,8 +66,10 @@ polka()
 		sapper.middleware({
 			store: req => {
 				return new Store({
-					user: req.session && req.session.user,
-                    token: req.session && req.session.token.access_token
+					user: {
+                        ...(req.session && req.session.user),
+                        token: req.session && req.session.token && req.session.token.access_token
+                    }
 				});
 			}
 		})

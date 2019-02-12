@@ -71,8 +71,10 @@
         },
 
         oncreate() {
-            const { token } = this.store.get();
-            api.get('wp-json/wp/v2/design/788', token)
+
+            const { user } = this.store.get();
+
+            api.get('wp-json/wp/v2/design/788', user.token)
                 .then(r=>console.log(r));
         }
     }
