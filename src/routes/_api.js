@@ -16,17 +16,8 @@ function send({ method, path, data, token }) {
 	}
 
 	return fetch(`${base}/${path}`, opts)
-		.then(r => r.text())
-		.then(json => {
-
-			try {
-				return JSON.parse(json);
-			}
-
-            catch (err) {
-				return json;
-			}
-		});
+		.then(r => r.json())
+		.then(json => json);
 }
 
 export function get(path, token) {
