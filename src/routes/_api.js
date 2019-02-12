@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+const base ='https://docs.health-and-parenting.com';
 
 function query(params) {
 
@@ -10,6 +10,7 @@ function query(params) {
 
 function send({ method, path, data, token }) {
 
+    const fetch = process.browser ? window.fetch : require('node-fetch').default;
 	const opts = { method, headers: {} };
 
 	if (data) {
@@ -20,8 +21,8 @@ function send({ method, path, data, token }) {
 	if (token) {
 		opts.headers['Authorization'] = `Bearer ${token}`;
 	}
-
-	return fetch(`${process.env.base}/${path}`, opts)
+console.log(`${base}/${path}`, opts);
+	return fetch(`${base}/${path}`, opts)
 		.then(r => r.json())
 		.then(json => json);
 }
