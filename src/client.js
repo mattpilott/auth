@@ -2,14 +2,12 @@ import * as sapper from '../__sapper__/client.js';
 import { Store } from 'svelte/store.js';
 
 function post(endpoint, data) {
-
+console.log('client.js');
 	return fetch(endpoint, {
 		method: 'POST',
 		credentials: 'include',
 		body: JSON.stringify(data),
-		headers: {
-			'Content-Type': 'application/json'
-		}
+		headers: { 'Content-Type': 'application/json' }
 	}).then(r => r.json());
 }
 

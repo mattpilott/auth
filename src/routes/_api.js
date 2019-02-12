@@ -2,13 +2,21 @@ import fetch from 'node-fetch';
 
 const base = 'https://docs.health-and-parenting.com';
 
+function query(params) {
+
+    return Object
+        .keys(params)
+        .map(key => key + (params[key] ? '=' + params[key] : '' ))
+        .join('&');
+};
+
 function send({ method, path, data, token }) {
 
 	const opts = { method, headers: {} };
 
 	if (data) {
-		opts.headers['Content-Type'] = 'application/json';
-		opts.body = JSON.stringify(data);
+		opts.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+		opts.body = query(data)
 	}
 
 	if (token) {
