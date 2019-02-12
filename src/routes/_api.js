@@ -1,8 +1,8 @@
+import fetch from 'node-fetch';
+
 const base = 'https://docs.health-and-parenting.com';
 
 function send({ method, path, data, token }) {
-
-	const fetch = process.browser ? window.fetch : require('node-fetch').default;
 
 	const opts = { method, headers: {} };
 
@@ -21,7 +21,9 @@ function send({ method, path, data, token }) {
 
 			try {
 				return JSON.parse(json);
-			} catch (err) {
+			}
+
+            catch (err) {
 				return json;
 			}
 		});

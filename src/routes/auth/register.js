@@ -12,18 +12,20 @@ export function post(req, res) {
 	api.post('/wp/?oauth=token', clientCredentials)
         .then(token => {
 
-            req.session.token = token;
+            if ( token.access_token ) {
+                req.session.token = token;
 
-            api.post('/wp-json/wp/v2/users', userCredentials, token.access_token)
-                .then(user => {
+                api.post('/wp-json/wp/v2/users', userCredentials, token.access_token)
+                    .then(user => {
 
-            		res.end(JSON.stringify(user));
-                })
-                .catch(response => {
+                		res.end(JSON.stringify(user));
+                    })
+                    .catch(response => {
 
-                    res.send = send.bind(res, response.status);
-                    res.end(response);
-                });
+                        res.send = send.bind(res, response.status);
+                        res.end(response);
+                    });
+            }
         })
         .catch(response => {
 
