@@ -21,7 +21,7 @@ function send({ method, path, data, token }) {
 	if (token) {
 		opts.headers['Authorization'] = `Bearer ${token}`;
 	}
-console.log(`${base}/${path}`, opts);
+
 	return fetch(`${base}/${path}`, opts)
 		.then(r => r.json())
 		.then(json => json);
