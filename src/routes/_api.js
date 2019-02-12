@@ -1,7 +1,5 @@
 import fetch from 'node-fetch';
 
-const base = 'https://docs.health-and-parenting.com';
-
 function query(params) {
 
     return Object
@@ -23,7 +21,7 @@ function send({ method, path, data, token }) {
 		opts.headers['Authorization'] = `Bearer ${token}`;
 	}
 
-	return fetch(`${base}/${path}`, opts)
+	return fetch(`${process.env.base}/${path}`, opts)
 		.then(r => r.json())
 		.then(json => json);
 }

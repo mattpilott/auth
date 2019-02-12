@@ -6,8 +6,8 @@ export function post(req, res) {
     const userCredentials = req.body;
     const clientCredentials = {
         grant_type: 'password',
-        client_id: 'bepxSF2ApO1LpPuPrlrhYM0blFC6JBasRDRFgqum',
-        client_secret: 'HEhNJXuxorjXOaH5XhZGxWvWshC0zid2rfQXh9VH'
+        client_id: process.env.id,
+        client_secret: process.env.secret
     };
 
     const allCredentials = {...clientCredentials, ...userCredentials};
