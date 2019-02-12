@@ -15,21 +15,23 @@ export function post(req, res) {
 	api.post('/wp/?oauth=token', allCredentials)
         .then(token => {
 
-    		req.session.token = token;
+            if ( token.access_token ) {
 
-            api.post('/wp-json/wp/v2/users/me', null, token.access_token)
-                .then(user => {
+        		req.session.token = token;
 
-                    req.session.user = user;
-            		res.end(JSON.stringify(user));
+                api.post('/wp-json/wp/v2/users/me', null, token.access_token)
+                    .then(user => {
 
-                })
-                .catch(response => {
+                        req.session.user = user;
+                		res.end(JSON.stringify(user));
 
-                    res.send = send.bind(res, response.status);
-                    res.end(response);
-                });
+                    })
+                    .catch(response => {
 
+                        res.send = send.bind(res, response.status);
+                        res.end(response);
+                    });
+            }
 	    })
         .catch(response => {
 
