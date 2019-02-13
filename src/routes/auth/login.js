@@ -6,8 +6,8 @@ export function post(req, res) {
     const userCredentials = req.body;
     const clientCredentials = {
         grant_type: 'password',
-        client_id: process.env.id,
-        client_secret: process.env.secret
+        client_id: 'bepxSF2ApO1LpPuPrlrhYM0blFC6JBasRDRFgqum',
+        client_secret: 'HEhNJXuxorjXOaH5XhZGxWvWshC0zid2rfQXh9VH'
     };
 
     const allCredentials = {...clientCredentials, ...userCredentials};
@@ -21,7 +21,7 @@ export function post(req, res) {
 
                 api.post('/wp-json/wp/v2/users/me', null, token.access_token)
                     .then(user => {
-
+                        
                         req.session.user = user;
                 		res.end(JSON.stringify({...user, token: token.access_token}));
 

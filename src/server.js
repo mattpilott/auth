@@ -7,7 +7,6 @@ import bodyParser from 'body-parser';
 import session from 'express-session';
 import sessionFileStore from 'session-file-store';
 import { Store } from 'svelte/store.js';
-import 'dotenv/config';
 
 const { PORT, NODE_ENV, NOW } = process.env;
 const dev = NODE_ENV === 'development';

@@ -14,7 +14,6 @@ devDependencies:
   '@babel/preset-env': 7.3.1
   '@babel/runtime': 7.3.1
   chokidar: 2.1.1
-  dotenv: 6.2.0
   npm-run-all: 4.1.5
   rollup: 1.1.2
   rollup-plugin-babel: 4.3.2
@@ -1170,12 +1169,6 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=
-  /dotenv/6.2.0:
-    dev: true
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-HygQCKUBSFl8wKQZBSemMywRWcEDNidvNbjGVyZu3nbZ8qq9ubiPoGLMdRDpfSrpkkm9BXYFkpKxxFX38o/76w==
   /ee-first/1.1.1:
     dev: false
     resolution:
@@ -3346,7 +3339,6 @@ specifiers:
   body-parser: ^1.18.3
   chokidar: ^2.1.1
   compression: ^1.7.3
-  dotenv: ^6.2.0
   express-session: ^1.15.6
   node-fetch: ^2.3.0
   npm-run-all: ^4.1.5
