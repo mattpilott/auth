@@ -6,8 +6,8 @@ export function post(req, res) {
     const userCredentials = req.body;
     const clientCredentials = {
         grant_type: 'client_credentials',
-        client_id: 'Hpgr6cpEsV8qu8P8RJB6R0J1kwYpbjGCzbfO1cuq',
-        client_secret: 'qcLY3tciwFtyMobSB6i0LGWrtjpKU3NXh50T9Stm'
+        client_id: 'bRj4jQPZmbISw6J0E17tO6Bo3kVOXAtYu3COpJvo',
+        client_secret: 'K2DyNVSOiB68WIjzYeteqVlwEqZw5GmjYooZpa1l'
     };
 
 	api.post('/wp/?oauth=token', clientCredentials)

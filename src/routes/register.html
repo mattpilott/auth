@@ -43,7 +43,7 @@
 				this.store.register({ username: email, email, password })
 					.then((token) => {
 
-                        const base ='https://docs.health-and-parenting.com';
+                        const base ='https://auth.kode.site';
 
                         fetch(`${base}/wp-json/wp/v2/media`, {
                             method: 'POST',
