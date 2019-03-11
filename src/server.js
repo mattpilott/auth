@@ -25,21 +25,19 @@ function protect(req, res, next) {
         '/login',
         '/auth/login',
         '/auth/register',
-        '/register'
+        '/register',
+        '/clients' // Added as not having this may cause sapper issues
     ];
 
     let isProtected = allowed.indexOf(req.url) == -1 && req.url.indexOf('.') == -1;
 
-    if( isProtected ) { // <-- always false in polka but not in express :s
+    if( isProtected && !req.session.user ) {
 
-        if( ! req.session.user ) {
+        res.statusCode = 302;
+        res.setHeader('Location', '/login');
+        res.end();
 
-            res.statusCode = 302;
-            res.setHeader('Location', '/login');
-            res.end();
-
-            return;
-        }
+        return;
     }
     next();
 }
@@ -64,6 +62,7 @@ polka()
 		sirv('static', { dev }),
 		sapper.middleware({
 			store: req => {
+                
 				return new Store({
 					user: {
                         ...(req.session && req.session.user),

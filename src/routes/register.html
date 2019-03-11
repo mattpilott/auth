@@ -1,36 +1,33 @@
-<svelte:head>
-	<title>Sign up</title>
-</svelte:head>
+<svelte:head><title>Sign up</title></svelte:head>
 
 <h1>Sign up</h1>
-<p>
-    <a href="/login">Have an account?</a>
-</p>
 
-<ListErrors {errors}/>
+<p><a href="/login">Have an account?</a></p>
 
-<form on:submit='submit(event)'>
-    <input type="text" placeholder="Your Userame" bind:value=username>
-    <input type="email" placeholder="Email" bind:value=email>
-    <input type="password" placeholder="Password" bind:value=password>
-    <button type="submit" disabled='{!username || !email || !password}'>
-        Sign up
-    </button>
+<ListErrors {errors} />
+
+<form on:submit="submit(event)">
+
+    <input type="email" placeholder="Email" bind:value="email">
+    <input type="password" placeholder="Password" bind:value="password">
+    <input type="file" ref:file>
+    <button type="submit" disabled='{!email || !password}'>Sign up</button>
 </form>
 
 <script>
+
 	import { goto } from '../../__sapper__/client.js';
 
 	export default {
+
 		components: { ListErrors: '../components/ListErrors.html' },
 
 		data() {
 			return {
-				username: 'test22',
 				email: 'hello@matt-pilott.com',
 				password: 'password',
 				errors: null
-			};
+			}
 		},
 
 		methods: {
@@ -38,19 +35,26 @@
 				event.preventDefault();
 
 				const { username, email, password } = this.get();
+                const data = new FormData();
+                const file = this.refs.file.files[0];
 
-				this.store.register({ username, email, password })
-					.then((response) => {
+                data.append('file', file);
 
-                        if (response.errors) {
+				this.store.register({ username: email, email, password })
+					.then((token) => {
 
-							this.set({ errors: response.errors });
-						}
+                        const base ='https://docs.health-and-parenting.com';
 
-                        else {
+                        fetch(`${base}/wp-json/wp/v2/media`, {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': 'Bearer ' + token.access_token,
+                                'Content-Disposition': 'attachment; filename=undraw_world_9iqb.png'
+                            },
+                            body: data
+                        })
 
-							goto('/login');
-						}
+                        //response.errors ? this.set({ errors: response.errors }) : goto('/login');
 					})
                     .catch((response) => {
 
