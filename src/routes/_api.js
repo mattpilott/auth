@@ -14,9 +14,11 @@ function send({ method, path, data, token, upload }) {
 	const opts = { method, headers: {} };
 
     if (data && upload) {
+        opts.headers['Content-Type'] = data.mimetype;
         opts.headers['Content-Disposition'] = `attachment; filename=${data.name}`;
 		opts.body = data;
     }
+
 	else if (data) {
 		opts.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 		opts.body = query(data)

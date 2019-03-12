@@ -37,24 +37,15 @@
                 const form = new FormData(this.refs.form);
 
 				this.store.register({ form })
-					.then((token) => {
-                        console.log(token);
-                        // const base ='https://auth.kode.site';
-                        //
-                        // fetch(`${base}/wp-json/wp/v2/media`, {
-                        //     method: 'POST',
-                        //     headers: {
-                        //         'Authorization': 'Bearer ' + token.access_token,
-                        //         'Content-Disposition': 'attachment; filename=undraw_world_9iqb.png'
-                        //     },
-                        //     body: data
-                        // })
+					.then(response => {
+                        
+                        console.log(response);
 
                         //response.errors ? this.set({ errors: response.errors }) : goto('/login');
 					})
-                    .catch((response) => {
+                    .catch(response => {
 
-                        response.error && this.set({ errors: response.error });
+                        response.errors && this.set({ errors: response.errors });
                     });
 			}
 		}
