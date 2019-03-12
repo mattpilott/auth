@@ -6,11 +6,11 @@
 
 <ListErrors {errors} />
 
-<form on:submit="submit(event)">
+<form on:submit="submit(event)" enctype="multipart/form-data" ref:form>
 
-    <input type="email" placeholder="Email" bind:value="email">
-    <input type="password" placeholder="Password" bind:value="password">
-    <input type="file" ref:file>
+    <input type="email" name="email" placeholder="Email" bind:value="email">
+    <input type="password" name="password" placeholder="Password" bind:value="password">
+    <input type="file" name="avatar" ref:avatar>
     <button type="submit" disabled='{!email || !password}'>Sign up</button>
 </form>
 
@@ -34,25 +34,21 @@
 			submit(event) {
 				event.preventDefault();
 
-				const { username, email, password } = this.get();
-                const data = new FormData();
-                const file = this.refs.file.files[0];
+                const form = new FormData(this.refs.form);
 
-                data.append('file', file);
-
-				this.store.register({ username: email, email, password })
+				this.store.register({ form })
 					.then((token) => {
-
-                        const base ='https://auth.kode.site';
-
-                        fetch(`${base}/wp-json/wp/v2/media`, {
-                            method: 'POST',
-                            headers: {
-                                'Authorization': 'Bearer ' + token.access_token,
-                                'Content-Disposition': 'attachment; filename=undraw_world_9iqb.png'
-                            },
-                            body: data
-                        })
+                        console.log(token);
+                        // const base ='https://auth.kode.site';
+                        //
+                        // fetch(`${base}/wp-json/wp/v2/media`, {
+                        //     method: 'POST',
+                        //     headers: {
+                        //         'Authorization': 'Bearer ' + token.access_token,
+                        //         'Content-Disposition': 'attachment; filename=undraw_world_9iqb.png'
+                        //     },
+                        //     body: data
+                        // })
 
                         //response.errors ? this.set({ errors: response.errors }) : goto('/login');
 					})

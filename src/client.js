@@ -30,8 +30,11 @@ class AuthStore extends Store {
 	}
 
 	register(credentials) {
-
-		return post(`auth/register`, credentials);
+        return fetch(`auth/register`, {
+    		method: 'POST',
+    		credentials: 'include',
+    		body: credentials.form
+    	}).then(r => r.json());
 	}
 
 	save(user) {

@@ -17,7 +17,16 @@ export function post(req, res) {
 
                 req.session.token = token;
 
-                res.end(JSON.stringify(token));
+                api.post('/wp-json/wp/v2/media', req.files.avatar, token.access_token, true)
+                    .then(media => {
+                        
+                		res.end(JSON.stringify(media));
+                    })
+                    .catch(response => {
+
+                        res.send = send.bind(res, response.status);
+                        res.end(response);
+                    });
 
                 // api.post('/wp-json/wp/v2/users', userCredentials, token.access_token)
                 //     .then(user => {
