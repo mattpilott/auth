@@ -5,3 +5,9 @@
 		{/each}
 	</ul>
 {/if}
+
+<script>
+
+    export let errors;
+    
+</script>
