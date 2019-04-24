@@ -8,18 +8,12 @@ function query(params) {
         .join('&');
 };
 
-function send({ method, path, data, token, upload }) {
+function send({ method, path, data, token }) {
 
     const fetch = process.browser ? window.fetch : require('node-fetch').default;
 	const opts = { method, headers: {} };
 
-    if (data && upload) {
-        opts.headers['Content-Type'] = data.mimetype;
-        opts.headers['Content-Disposition'] = `attachment; filename=${data.name}`;
-		opts.body = data;
-    }
-
-	else if (data) {
+	if (data) {
 		opts.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 		opts.body = query(data)
 	}
@@ -41,8 +35,8 @@ export function del(path, token) {
 	return send({ method: 'DELETE', path, token });
 }
 
-export function post(path, data, token, upload = false) {
-	return send({ method: 'POST', path, data, token, upload });
+export function post(path, data, token) {
+	return send({ method: 'POST', path, data, token });
 }
 
 export function put(path, data, token) {

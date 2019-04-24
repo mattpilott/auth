@@ -23,6 +23,7 @@ export function post(req, res) {
                     .then(user => {
 
                         req.session.user = user;
+                        
                 		res.end(JSON.stringify({...user, token: token.access_token}));
 
                     })
