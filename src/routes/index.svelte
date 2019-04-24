@@ -40,11 +40,12 @@
 <script context="module">
 
     import { auth } from './_stores.js';
-    import { goto } from '@sapper/app';
+    import { goto, getSession } from '@sapper/app';
 
-    export function preload({ session }) {
+    export function preload(page, session) {
 
-        const { user } = auth.get();
+        console.log(session);
+        const { user } = session;
 
         return { firstname: user.first_name }
     }
@@ -62,7 +63,7 @@
 
     onMount(() => {
 
-        const { user } = auth.get();
+        const { user } = getSession();
 
         api.get('wp-json/wp/v2/design/788', user.token).then(r => console.log(r));
     });

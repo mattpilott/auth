@@ -5,7 +5,6 @@ import * as sapper from '@sapper/server';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import sessionFileStore from 'session-file-store';
-import fileUpload from 'express-fileupload';
 
 const { PORT, NODE_ENV, NOW } = process.env;
 const dev = NODE_ENV === 'development';
@@ -49,21 +48,14 @@ polka()
 		saveUninitialized: true,
 		cookie: {
 			maxAge: 31536000
-		},
-		store: new FileStore({
-			path: NOW ? `/tmp/sessions` : `.sessions`
-		})
+		}
 	}))
     .use(protect)
-    .use(fileUpload({
-        useTempFiles: true,
-        tempFileDir: '/tmp'
-    }))
 	.use(
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),
         sapper.middleware({
-            props: req => ({
+            session: req => ({
                 user: {
                     ...(req.session && req.session.user),
                     token: req.session && req.session.token && req.session.token.access_token

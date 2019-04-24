@@ -10,7 +10,6 @@
 
     <input type="email" name="email" placeholder="Email" bind:value="{email}">
     <input type="password" name="password" placeholder="Password" bind:value="{password}">
-    <input type="file" name="avatar" bind:this="{avatarEl}">
     <button type="submit" disabled='{!email || !password}'>Sign up</button>
 </form>
 
@@ -20,24 +19,21 @@
     import ListErrors from '../components/ListErrors.svelte';
 
     export let formEl;
-    export let avatarEl;
     export let email = 'hello@matt-pilott.com';
     export let password = 'password';
     export let errors = null;
 
     function submit(event) {
-        
-        const form = new FormData(formEl);
-        auth.register({ form })
+
+        auth.register({ username: email, email, password })
             .then(response => {
 
-                console.log(response);
-                // if (response.errors) {
-                //     errors = response.errors;
-                // }
-                // else {
-                //     goto('/login');
-                // }
+                if (response.errors) {
+                    errors = response.errors;
+                }
+                else {
+                    goto('/login');
+                }
             })
             .catch(response => {
                 if (response.errors) errors = response.errors;
