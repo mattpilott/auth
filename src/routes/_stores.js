@@ -2,8 +2,6 @@ import { writable } from 'svelte/store';
 
 function post(endpoint, data) {
 
-    fetch(endpoint)
-
 	return fetch(endpoint, {
 		method: 'POST',
 		credentials: 'include',
