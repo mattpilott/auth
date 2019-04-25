@@ -19,7 +19,7 @@
 
 <script>
 
-	import { goto } from '@sapper/app';
+	import { goto, getSession } from '@sapper/app';
     import { auth } from './_stores.js';
     import ListErrors from '../components/ListErrors.svelte';
 

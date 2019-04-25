@@ -44,7 +44,6 @@
 
     export function preload(page, session) {
 
-        console.log(session);
         const { user } = session;
 
         return { firstname: user.first_name }
