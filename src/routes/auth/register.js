@@ -1,4 +1,4 @@
-import * as api from '../_api.js';
+import * as api from '../../library/api.js';
 import send from '@polka/send-type';
 import 'dotenv/config';
 

@@ -39,7 +39,7 @@
 
 <script context="module">
 
-    import { auth } from './_stores.js';
+    import { auth } from '../library/stores.js';
     import { goto, getSession } from '@sapper/app';
 
     export function preload(page, session) {
@@ -58,7 +58,7 @@
 <script>
 
     import { onMount } from 'svelte';
-    import * as api from './_api.js';
+    import * as api from '../library/api.js';
 
     onMount(() => {
 

@@ -15,7 +15,7 @@
 
 <script>
     import { goto } from '@sapper/app';
-    import { auth } from './_stores.js';
+    import { auth } from '../library/stores.js';
     import ListErrors from '../components/ListErrors.svelte';
 
     export let formEl;
