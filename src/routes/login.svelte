@@ -23,14 +23,14 @@
     import { auth } from '../library/stores.js';
     import ListErrors from '../components/ListErrors.svelte';
 
-    export let username = 'admin@creativelittledots.co.uk';
-    export let password = 'CD0T-s-20!7';
+    export let username = 'hello@matt-pilott.com';
+    export let password = 'suchincredibletesting19';
     export let errors = null;
 
     function submit(event) {
 
         auth.login({ username, password })
-            .then((response) => {
+            .then(response => {
 
                 if (response.errors) {
                     errors = response.errors;
@@ -39,7 +39,7 @@
                     goto('/');
                 }
             })
-            .catch((response) => {
+            .catch(response => {
 
                 if (response.error) errors = response.error;
             });
