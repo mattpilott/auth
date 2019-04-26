@@ -27,6 +27,8 @@
     export let password = 'suchincredibletesting19';
     export let errors = null;
 
+    const session = getSession();
+
     function submit(event) {
 
         auth.login({ username, password })
@@ -36,6 +38,7 @@
                     errors = response.errors;
                 }
                 else {
+                    $session.user = response;
                     goto('/');
                 }
             })

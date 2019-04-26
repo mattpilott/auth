@@ -43,7 +43,7 @@
     import { goto, getSession } from '@sapper/app';
 
     export function preload(page, session) {
-
+console.log('session: ', session);
         const { user } = session;
 
         return { firstname: user.first_name }
@@ -62,9 +62,9 @@
 
     onMount(() => {
 
-        const { user } = getSession();
-
-        api.get('wp-json/wp/v2/design/788', user.token).then(r => console.log(r));
+        // const { user } = getSession();
+        //
+        // api.get('wp-json/wp/v2/design/788', user.token).then(r => console.log(r));
     });
 
     export let firstname;

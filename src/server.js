@@ -5,8 +5,9 @@ import * as sapper from '@sapper/server';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import sessionFileStore from 'session-file-store';
+import 'dotenv/config';
 
-const { PORT, NODE_ENV, NOW } = process.env;
+const { PORT, NODE_ENV, NOW, SECRET } = process.env;
 const dev = NODE_ENV === 'development';
 const FileStore = sessionFileStore(session);
 
@@ -27,7 +28,7 @@ function protect(req, res, next) {
     ];
 
     let isProtected = allowed.indexOf(req.url) == -1 && req.url.indexOf('.') == -1;
-
+console.log(req.session);
     if( isProtected && !req.session.user ) {
 
         res.statusCode = 302;
@@ -43,24 +44,17 @@ polka()
     //.use(logger)
 	.use(bodyParser.json())
 	.use(session({
-		secret: 'topsecret',
+		secret: SECRET,
 		resave: false,
 		saveUninitialized: true,
-		cookie: {
-			maxAge: 31536000
-		}
+		cookie: { maxAge: 31536000 }
 	}))
     .use(protect)
 	.use(
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),
         sapper.middleware({
-            session: req => ({
-                user: {
-                    ...(req.session && req.session.user),
-                    token: req.session && req.session.token && req.session.token.access_token
-                }
-            })
+            session: req => ({ user: req.session && req.session.user })
         })
 	)
     .listen(PORT, err => {

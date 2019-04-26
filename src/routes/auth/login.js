@@ -18,15 +18,10 @@ export function post(req, res) {
 
             if ( token.access_token ) {
 
-        		req.session.token = token;
-
                 api.post('wp-json/wp/v2/users/me', null, token.access_token)
                     .then(user => {
 
-                        req.session.user = user;
-
                 		res.end(JSON.stringify({...user, token: token.access_token}));
-
                     })
                     .catch(response => {
 
