@@ -1,6 +1,6 @@
 {
-  "name": "TODO",
-  "description": "TODO",
+  "name": "Auth",
+  "description": "Authenticate Sapper with WordPress",
   "version": "0.0.1",
   "scripts": {
     "dev": "sapper dev",
