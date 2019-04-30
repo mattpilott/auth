@@ -1,16 +1,14 @@
 import sirv from 'sirv';
 import polka from 'polka';
 import compression from 'compression';
-import * as sapper from '../__sapper__/server.js';
-
+import * as sapper from '@sapper/server';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import sessionFileStore from 'session-file-store';
-import { Store } from 'svelte/store.js';
+import 'dotenv/config';
 
-const { PORT, NODE_ENV, NOW } = process.env;
+const { PORT, NODE_ENV, NOW, SECRET } = process.env;
 const dev = NODE_ENV === 'development';
-
 const FileStore = sessionFileStore(session);
 
 // Log every request
@@ -25,21 +23,19 @@ function protect(req, res, next) {
         '/login',
         '/auth/login',
         '/auth/register',
-        '/register'
+        '/register',
+        '/client' // Added as not having this may cause sapper issues
     ];
 
     let isProtected = allowed.indexOf(req.url) == -1 && req.url.indexOf('.') == -1;
 
-    if( isProtected ) { // <-- always false in polka but not in express :s
+    if( isProtected && !req.session.token ) {
 
-        if( ! req.session.user ) {
+        res.statusCode = 302;
+        res.setHeader('Location', '/login');
+        res.end();
 
-            res.statusCode = 302;
-            res.setHeader('Location', '/login');
-            res.end();
-
-            return;
-        }
+        return;
     }
     next();
 }
@@ -48,30 +44,19 @@ polka()
     //.use(logger)
 	.use(bodyParser.json())
 	.use(session({
-		secret: 'topsecret',
+		secret: SECRET,
 		resave: false,
-		saveUninitialized: true,
-		cookie: {
-			maxAge: 31536000
-		},
-		store: new FileStore({
-			path: NOW ? `/tmp/sessions` : `.sessions`
-		})
+		saveUninitialized: false,
+		cookie: { maxAge: 31536000 },
+        store: new FileStore({ path: NOW ? `/tmp/sessions` : `.sessions` })
 	}))
     .use(protect)
 	.use(
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),
-		sapper.middleware({
-			store: req => {
-				return new Store({
-					user: {
-                        ...(req.session && req.session.user),
-                        token: req.session && req.session.token && req.session.token.access_token
-                    }
-				});
-			}
-		})
+        sapper.middleware({
+            session: req => ({ user: req.session && req.session.user })
+        })
 	)
     .listen(PORT, err => {
 		if (err) console.log('error', err);

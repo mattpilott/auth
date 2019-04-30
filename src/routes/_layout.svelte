@@ -1,5 +1,5 @@
 <main>
-	<svelte:component this={child.component} {...child.props}/>
+	<slot></slot>
 </main>
 
 <style>

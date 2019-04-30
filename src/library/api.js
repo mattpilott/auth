@@ -1,4 +1,4 @@
-const base ='https://docs.health-and-parenting.com';
+const base = 'https://auth.kode.site';
 
 function query(params) {
 
