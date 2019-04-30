@@ -16,6 +16,8 @@ export async function post(req, res) {
         const user = await api.post('wp-json/wp/v2/users/me', null, token.access_token);
 
         req.session.token = token.access_token;
+        req.session.user = user;
+        
         res.end(JSON.stringify(user));
     }
 

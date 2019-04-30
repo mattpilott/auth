@@ -29,7 +29,7 @@ function protect(req, res, next) {
 
     let isProtected = allowed.indexOf(req.url) == -1 && req.url.indexOf('.') == -1;
 
-    if( isProtected && !req.session.user ) {
+    if( isProtected && !req.session.token ) {
 
         res.statusCode = 302;
         res.setHeader('Location', '/login');
