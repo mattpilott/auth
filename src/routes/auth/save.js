@@ -4,7 +4,7 @@ export function post(req, res) {
 
 	const user = req.body;
 
-	api.put('user', { user }, req.session && req.session.token && req.session.token.access_token)
+	api.put('user', { user }, req.session && req.session.token)
         .then(response => {
 
     		if (response.user) {
