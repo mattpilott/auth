@@ -54,17 +54,19 @@
     import * as api from '../library/api.js';
     import { auth } from '../library/stores.js';
 
+    export let firstname;
+
     onMount(() => {
 
         const { user } = getSession();
 
-        //api.get('wp-json/wp/v2/design/788', user.token).then(r => console.log(r));
+        auth.get('wp-json/wp/v2/posts', {per_page: 1}).then(r => console.log(r));
     });
 
-    function logout() {
+    async function logout() {
 
-        auth.logout().then(() => goto('/login'));
+        await auth.logout();
+
+        goto('/login');
     }
-
-    export let firstname;
 </script>

@@ -10,6 +10,14 @@ function post(endpoint, data = {}) {
 	}).then(r => r.json());
 }
 
+function query(params) {
+
+    return Object
+        .keys(params)
+        .map(key => key + (params[key] ? '=' + params[key] : '' ))
+        .join('&');
+};
+
 function createAuth() {
 
 	const { subscribe, set, update } = writable();
@@ -48,7 +56,15 @@ function createAuth() {
         return user;
     };
 
-	return { subscribe, login, logout, register, save };
+    async function get(endpoint, params = {}) {
+
+        const url = await Object.keys(params).length === 0 ? endpoint : endpoint + '?' + query(params);
+        const data = await post('auth/get', {url});
+
+        return data;
+    };
+
+	return { subscribe, login, logout, register, save, get };
 }
 
 export const auth = createAuth();

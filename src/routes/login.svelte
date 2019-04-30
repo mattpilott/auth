@@ -25,22 +25,28 @@
 
     const session = getSession();
 
-    function submit(event) {
+    async function submit(event) {
 
-        auth.login({ username, password })
-            .then(response => {
+        try {
 
-                if (response.errors) {
-                    errors = response.errors;
-                }
-                else {
-                    $session.user = response;
-                    goto('/');
-                }
-            })
-            .catch(response => {
+            const response = await auth.login({ username, password });
 
-                if (response.error) errors = response.error;
-            });
+            if (response.errors) {
+
+                errors = response.errors;
+            }
+
+            else {
+
+                $session.user = response;
+
+                goto('/');
+            }
+        }
+
+        catch(response) {
+
+            if (response.error) errors = response.error;
+        }
     }
 </script>

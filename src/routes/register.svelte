@@ -19,24 +19,30 @@
     import ListErrors from '../components/ListErrors.svelte';
 
     export let formEl;
-    export let email = 'hello@matt-pilott.com';
+    export let email = 'matt@creativelittledots.co.uk';
     export let password = 'password';
     export let errors = null;
 
-    function submit(event) {
+    async function submit(event) {
 
-        auth.register({ username: email, email, password })
-            .then(response => {
+        try {
 
-                if (response.errors) {
-                    errors = response.errors;
-                }
-                else {
-                    goto('/login');
-                }
-            })
-            .catch(response => {
-                if (response.errors) errors = response.errors;
-            });
+            const response = await auth.register({ username: email, email, password });
+
+            if (response.errors) {
+
+                errors = response.errors;
+            }
+
+            else {
+
+                goto('/login');
+            }
+        }
+
+        catch(response) {
+
+            if (response.error) errors = response.error;
+        }
     };
 </script>
