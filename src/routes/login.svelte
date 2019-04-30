@@ -3,18 +3,14 @@
 </svelte:head>
 
 <h1>Sign In</h1>
-<p>
-    <a href="/register">Need an account?</a>
-</p>
+<p><a href="/register">Need an account?</a></p>
 
 <ListErrors {errors}/>
 
 <form on:submit|preventDefault='{submit}'>
     <input type="email" placeholder="Email" bind:value={username}>
     <input type="password" placeholder="Password" bind:value={password}>
-    <button type="submit" disabled='{!username || !password}'>
-        Sign in
-    </button>
+    <button type="submit" disabled='{!username || !password}'>Sign in</button>
 </form>
 
 <script>

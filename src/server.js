@@ -24,12 +24,12 @@ function protect(req, res, next) {
         '/auth/login',
         '/auth/register',
         '/register',
-        '/clients' // Added as not having this may cause sapper issues
+        '/client' // Added as not having this may cause sapper issues
     ];
 
     let isProtected = allowed.indexOf(req.url) == -1 && req.url.indexOf('.') == -1;
-console.log(req.session);
-    if( isProtected && !req.session.user ) {
+console.log(isProtected, req.session.token);
+    if(isProtected && ! req.session.user ) {
 
         res.statusCode = 302;
         res.setHeader('Location', '/login');
@@ -46,8 +46,9 @@ polka()
 	.use(session({
 		secret: SECRET,
 		resave: false,
-		saveUninitialized: true,
-		cookie: { maxAge: 31536000 }
+		saveUninitialized: false,
+		cookie: { maxAge: 31536000 },
+        store: new FileStore({ path: NOW ? `/tmp/sessions` : `.sessions` })
 	}))
     .use(protect)
 	.use(

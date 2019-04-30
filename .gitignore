@@ -7,3 +7,4 @@ yarn-error.log
 pnpm-lock.yaml
 shrinkwrap.yaml
 .env
+sessions
