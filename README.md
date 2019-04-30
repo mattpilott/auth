@@ -9,7 +9,7 @@ Written using Svelte V3 and using the wp oauth server plugin.
 
 You'll need an `.env` file in your root with the following variables:
 ```
-SECRET=your_super_secrey
+SECRET=your_super_secret
 LOGIN_ID=XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 LOGIN_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 REGISTER_ID=XXXXXXXXXXXXXXXXXXXXXXXXXXXX
