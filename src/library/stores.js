@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-function post(endpoint, data) {
+function post(endpoint, data = {}) {
 
 	return fetch(endpoint, {
 		method: 'POST',
@@ -16,7 +16,7 @@ function createAuth() {
 
     async function login(credentials) {
 
-        const user = await post(`auth/login`, credentials);
+        const user = await post('auth/login', credentials);
 
         set({user});
 
@@ -25,7 +25,7 @@ function createAuth() {
 
     async function logout() {
 
-        const response = await post(`auth/logout`);
+        const response = await post('auth/logout');
 
         set({user: null});
 
@@ -34,14 +34,14 @@ function createAuth() {
 
     async function register(credentials) {
 
-        const user = await post(`auth/register`, credentials);
+        const user = await post('auth/register', credentials);
 
         return user;
     };
 
     async function save(credentials) {
 
-        const user = await post(`auth/save`, credentials);
+        const user = await post('auth/save', credentials);
 
         set({user});
 

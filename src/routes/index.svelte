@@ -9,7 +9,7 @@
 	<figcaption>HIGH FIVE!</figcaption>
 </figure>
 
-<button on:click='{logout()}'>Logout</button>
+<button on:click='{logout}'>Logout</button>
 
 <style>
 	h1, figure {
@@ -39,33 +39,32 @@
 
 <script context="module">
 
-    import { auth } from '../library/stores.js';
-    import { goto, getSession } from '@sapper/app';
-
     export function preload(page, session) {
-console.log('session: ', session);
+
         const { user } = session;
 
         return { firstname: user.first_name }
-    }
-
-    function logout() {
-
-        auth.logout().then(() => goto('/login'));
     }
 </script>
 
 <script>
 
+    import { goto, getSession } from '@sapper/app';
     import { onMount } from 'svelte';
     import * as api from '../library/api.js';
+    import { auth } from '../library/stores.js';
 
     onMount(() => {
 
-        // const { user } = getSession();
-        //
-        // api.get('wp-json/wp/v2/design/788', user.token).then(r => console.log(r));
+        const { user } = getSession();
+
+        //api.get('wp-json/wp/v2/design/788', user.token).then(r => console.log(r));
     });
+
+    function logout() {
+
+        auth.logout().then(() => goto('/login'));
+    }
 
     export let firstname;
 </script>
