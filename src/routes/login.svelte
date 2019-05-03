@@ -15,15 +15,15 @@
 
 <script>
 
-	import { goto, getSession } from '@sapper/app';
+	import { goto, stores } from '@sapper/app';
     import { auth } from '../library/stores.js';
     import ListErrors from '../components/ListErrors.svelte';
 
-    export let username = 'hello@matt-pilott.com';
-    export let password = 'suchincredibletesting19';
-    export let errors = null;
+    const { session } = stores();
 
-    const session = getSession();
+    let username = 'hello@matt-pilott.com';
+    let password = 'suchincredibletesting19';
+    let errors = null;
 
     async function submit(event) {
 
@@ -39,7 +39,7 @@
             else {
 
                 $session.user = response;
-
+                
                 goto('/');
             }
         }

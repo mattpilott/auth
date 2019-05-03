@@ -49,7 +49,7 @@
 
 <script>
 
-    import { goto, getSession } from '@sapper/app';
+    import { goto } from '@sapper/app';
     import { onMount } from 'svelte';
     import * as api from '../library/api.js';
     import { auth } from '../library/stores.js';
@@ -58,9 +58,7 @@
 
     onMount(() => {
 
-        const { user } = getSession();
-
-        auth.get('wp-json/wp/v2/posts', {per_page: 1}).then(r => console.log(r));
+        auth.get('wp-json/wp/v2/posts', {per_page: 1}).then(r => console.log('authenticated request',r));
     });
 
     async function logout() {
