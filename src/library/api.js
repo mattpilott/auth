@@ -22,9 +22,7 @@ function send({ method, path, data, token }) {
 		opts.headers['Authorization'] = `Bearer ${token}`;
 	}
 
-	return fetch(`${base}/${path}`, opts)
-		.then(r => r.json())
-		.then(json => json);
+	return fetch(`${base}/${path}`, opts).then(r => r.json());
 }
 
 export function get(path, token) {

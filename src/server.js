@@ -11,32 +11,32 @@ const { PORT, NODE_ENV, NOW, SECRET } = process.env;
 const dev = NODE_ENV === 'development';
 const FileStore = sessionFileStore(session);
 
-// Log every request
 function logger(req, res, next) {
     console.log(`~> Received ${req.method} on ${req.url}`);
-    next(); // move on
+    next();
 }
 
 function protect(req, res, next) {
 
-    let allowed = [
+    const allowed = [
         '/login',
+        '/reset',
         '/auth/login',
         '/auth/register',
-        '/register',
-        '/client' // Added as not having this may cause sapper issues
+        '/register'
     ];
 
-    let isProtected = allowed.indexOf(req.url) == -1 && req.url.indexOf('.') == -1;
+    const isPrivate = !allowed.includes(req.path);
+    const isFile = req.path.includes('.');
+    const hasToken = req.session.token;
 
-    if( isProtected && !req.session.token ) {
+    if ( isPrivate && !isFile && !hasToken ) {
 
         res.statusCode = 302;
         res.setHeader('Location', '/login');
         res.end();
-
-        return;
     }
+
     next();
 }
 

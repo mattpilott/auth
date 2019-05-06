@@ -58,7 +58,7 @@
 
     onMount(() => {
 
-        auth.get('wp-json/wp/v2/posts', {per_page: 1}).then(r => console.log('authenticated request',r));
+        //auth.get('wp-json/wp/v2/posts', {per_page: 1}).then(r => console.log('authenticated request',r));
     });
 
     async function logout() {

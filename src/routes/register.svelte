@@ -4,10 +4,9 @@
 
 <p><a href="/login">Have an account?</a></p>
 
-<ListErrors {errors} />
+<Error {error} />
 
 <form on:submit|preventDefault="{submit}" enctype="multipart/form-data" bind:this="{formEl}">
-
     <input type="email" name="email" placeholder="Email" bind:value="{email}">
     <input type="password" name="password" placeholder="Password" bind:value="{password}">
     <button type="submit" disabled='{!email || !password}'>Sign up</button>
@@ -16,33 +15,25 @@
 <script>
     import { goto } from '@sapper/app';
     import { auth } from '../library/stores.js';
-    import ListErrors from '../components/ListErrors.svelte';
+    import Error from '../components/Error.svelte';
 
     export let formEl;
     export let email = 'matt@creativelittledots.co.uk';
     export let password = 'password';
-    export let errors = null;
+    export let error = null;
 
     async function submit(event) {
 
-        try {
+        const response = await auth.register({ username: email, email, password });
 
-            const response = await auth.register({ username: email, email, password });
+        if (response.code) {
 
-            if (response.errors) {
-
-                errors = response.errors;
-            }
-
-            else {
-
-                goto('/login');
-            }
+            error = response.message;
         }
 
-        catch(response) {
+        else {
 
-            if (response.error) errors = response.error;
+            goto('/login');
         }
     };
 </script>

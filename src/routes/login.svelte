@@ -4,8 +4,9 @@
 
 <h1>Sign In</h1>
 <p><a href="/register">Need an account?</a></p>
+<p><a href="/reset">Forgotten?</a></p>
 
-<ListErrors {errors}/>
+<Error {error} />
 
 <form on:submit|preventDefault='{submit}'>
     <input type="email" placeholder="Email" bind:value={username}>
@@ -17,36 +18,28 @@
 
 	import { goto, stores } from '@sapper/app';
     import { auth } from '../library/stores.js';
-    import ListErrors from '../components/ListErrors.svelte';
+    import Error from '../components/Error.svelte';
 
     const { session } = stores();
 
     let username = 'hello@matt-pilott.com';
     let password = 'suchincredibletesting19';
-    let errors = null;
+    let error = false;
 
     async function submit(event) {
 
-        try {
+        const response = await auth.login({ username, password });
 
-            const response = await auth.login({ username, password });
+        if (response.code) {
 
-            if (response.errors) {
-
-                errors = response.errors;
-            }
-
-            else {
-
-                $session.user = response;
-                
-                goto('/');
-            }
+            error = response.message;
         }
 
-        catch(response) {
+        else {
 
-            if (response.error) errors = response.error;
+            $session.user = response;
+
+            goto('/');
         }
     }
 </script>
