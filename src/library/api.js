@@ -23,14 +23,14 @@ async function send({ method, path, data, token }) {
 	}
 
     const req = await fetch(`${base}/${path}`, opts);
-    const res = await [req.text(), req.status];
+    const res = await req.text();
 
     try {
-        return JSON.parse(res[0]);
+        return JSON.parse(res);
     }
 
     catch(e) {
-        return res[1];
+        return req;
     }
 }
 

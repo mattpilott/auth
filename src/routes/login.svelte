@@ -30,16 +30,15 @@
 
         const response = await auth.login({ username, password });
 
-        if (response.code) {
-
-            error = response.message;
-        }
-
-        else {
+        if (response.username === username) {
 
             $session.user = response;
 
             goto('/');
+        }
+
+        else {
+            error = response.message;
         }
     }
 </script>
