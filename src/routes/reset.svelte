@@ -35,7 +35,6 @@
 
         return { reset: page.query }
     }
-
 </script>
 
 <script>
@@ -58,13 +57,13 @@
 
         const response = await api.post('wp-login.php?action=lostpassword', {user_login});
 
-        if (response == 200) check = true;
+        if (response.status == 200) check = true;
     }
 
     async function submitReset(event) {
 
         const response = await api.post('wp-login.php?action=rp', {user_login, pass1, pass2, rp_key});
 
-        if (response == 200) changed = true;
+        if (response.status == 200) changed = true;
     }
 </script>
