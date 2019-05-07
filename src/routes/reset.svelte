@@ -15,6 +15,8 @@
         <button type="submit" disabled='{!user_login}'>Request Reset</button>
     </form>
 
+    {#if check}Check your email{/if}
+
 { :else }
 
     <form on:submit|preventDefault='{submitReset}'>
@@ -22,6 +24,8 @@
         <input type="password" placeholder="Confirm Password" bind:value={pass2}>
         <button type="submit" disabled='{!pass1 || !pass2}'>Submit Reset</button>
     </form>
+
+    {#if changed}Password successfully reset{/if}
 
 { /if }
 
@@ -47,18 +51,20 @@
     let pass2 = '';
     let rp_key = reset.key;
     let error = false;
+    let check = false;
+    let changed = false
 
     async function requestReset(event) {
 
         const response = await api.post('wp-login.php?action=lostpassword', {user_login});
 
-        console.log('requestReset', response);
+        if (response == 200) check = true;
     }
 
     async function submitReset(event) {
 
         const response = await api.post('wp-login.php?action=rp', {user_login, pass1, pass2, rp_key});
 
-        console.log('submitReset', response);
+        if (response == 200) changed = true;
     }
 </script>

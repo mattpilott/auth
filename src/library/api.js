@@ -8,7 +8,7 @@ function query(params) {
         .join('&');
 };
 
-function send({ method, path, data, token }) {
+async function send({ method, path, data, token }) {
 
     const fetch = process.browser ? window.fetch : require('node-fetch').default;
 	const opts = { method, headers: {} };
@@ -22,7 +22,16 @@ function send({ method, path, data, token }) {
 		opts.headers['Authorization'] = `Bearer ${token}`;
 	}
 
-	return fetch(`${base}/${path}`, opts).then(r => r.json());
+    const req = await fetch(`${base}/${path}`, opts);
+    const res = await [req.text(), req.status];
+
+    try {
+        return JSON.parse(res[0]);
+    }
+
+    catch(e) {
+        return res[1];
+    }
 }
 
 export function get(path, token) {
