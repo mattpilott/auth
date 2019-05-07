@@ -14,6 +14,8 @@
 
     export let error;
 
+    $: if (error) setTimeout(() => {error = false}, 5000);
+
 </script>
 
 <style>
