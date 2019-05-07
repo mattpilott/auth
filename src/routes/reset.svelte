@@ -63,7 +63,7 @@
     async function submitReset(event) {
 
         const response = await api.post('wp-login.php?action=rp', {user_login, pass1, pass2, rp_key});
-
+        
         if (response.status == 200) changed = true;
     }
 </script>
