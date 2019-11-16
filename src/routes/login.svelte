@@ -16,14 +16,14 @@
 
 <script>
 
-	import { goto, stores } from '@sapper/app';
+	 import { goto, stores } from '@sapper/app';
     import { auth } from '../library/stores.js';
     import Error from '../components/Error.svelte';
 
     const { session } = stores();
 
-    let username = 'hello@matt-pilott.com';
-    let password = 'suchincredibletesting19';
+    let username;
+    let password;
     let error = false;
 
     async function submit(event) {

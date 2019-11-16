@@ -17,10 +17,10 @@
     import { auth } from '../library/stores.js';
     import Error from '../components/Error.svelte';
 
-    export let formEl;
-    export let email = 'matt@creativelittledots.co.uk';
-    export let password = 'password';
-    export let error = null;
+    let formEl;
+    let email;
+    let password;
+    let error = null;
 
     async function submit(event) {
 

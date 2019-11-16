@@ -40,12 +40,12 @@
 <script>
 
     import * as api from '../library/api.js';
-	import { goto } from '@sapper/app';
+	 import { goto } from '@sapper/app';
     import Error from '../components/Error.svelte';
 
     export let reset = false;
 
-    let user_login = reset.login || 'hello@matt-pilott.com';
+    let user_login = reset.login;
     let pass1 = '';
     let pass2 = '';
     let rp_key = reset.key;
@@ -63,7 +63,7 @@
     async function submitReset(event) {
 
         const response = await api.post('wp-login.php?action=rp', {user_login, pass1, pass2, rp_key});
-        
+
         if (response.status == 200) changed = true;
     }
 </script>
