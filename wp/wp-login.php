@@ -446,7 +446,7 @@ function retrieve_password() {
 	 */
 	$message = apply_filters( 'retrieve_password_message', $message, $key, $user_login, $user_data );
 
-	if ( $message && ! wp_mail( $user_email, wp_specialchars_decode( $title ), $message ) ) {
+	if ( $message && ! wp_mail( $user_email, wp_specialchars_decode( $title ), $message, ['Content-Type: text/html'] ) ) {
 		$errors->add(
 			'retrieve_password_email_failure',
 			sprintf(
@@ -881,6 +881,15 @@ switch ( $action ) {
 		if ( isset( $_COOKIE[ $rp_cookie ] ) && 0 < strpos( $_COOKIE[ $rp_cookie ], ':' ) ) {
 			list( $rp_login, $rp_key ) = explode( ':', wp_unslash( $_COOKIE[ $rp_cookie ] ), 2 );
 
+			$user = check_password_reset_key( $rp_key, $rp_login );
+
+			if ( isset( $_POST['pass1'] ) && ! hash_equals( $rp_key, $_POST['rp_key'] ) ) {
+				$user = false;
+			}
+		} else if( ! empty( $_POST['rp_key'] ) && ! empty( $_POST['user_login'] ) ) {
+			$rp_key = $_POST['rp_key'];
+			$rp_login = $_POST['user_login'];
+		
 			$user = check_password_reset_key( $rp_key, $rp_login );
 
 			if ( isset( $_POST['pass1'] ) && ! hash_equals( $rp_key, $_POST['rp_key'] ) ) {
